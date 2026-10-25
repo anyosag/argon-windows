@@ -9,7 +9,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 """
-Helium build script for Windows
+Argon build script for Windows
 """
 
 import sys

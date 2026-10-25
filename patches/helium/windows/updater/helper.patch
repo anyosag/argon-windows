@@ -82,7 +82,7 @@
 +namespace helium_updater {
 +
 +namespace {
-+constexpr wchar_t kEventSource[] = L"HeliumUpdateHelper";
++constexpr wchar_t kEventSource[] = L"ArgonUpdateHelper";
 +}  // namespace
 +
 +void LogEvent(WORD type, const std::wstring& message) {

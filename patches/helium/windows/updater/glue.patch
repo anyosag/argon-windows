@@ -480,7 +480,7 @@
 +
 +      const std::wstring version =
 +          base::UTF8ToWide(std::string(version_info::GetHeliumVersionNumber()));
-+      win_sparkle_set_app_details(L"Helium", L"Helium", version.c_str());
++      win_sparkle_set_app_details(L"Argon", L"Argon", version.c_str());
 +      win_sparkle_set_eddsa_public_key(BUILDFLAG(WINSPARKLE_ED_KEY));
 +      RegisterWinSparkleCallbacks();
 +      win_sparkle_set_update_check_interval(

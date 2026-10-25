@@ -1,21 +1,27 @@
-# helium-windows
+# argon-windows
 
-Windows packaging for [Helium](https://github.com/imputnet/helium).
+Windows packaging for [Argon](https://github.com/anyosag/Argon), a fork of the
+[Helium Browser](https://github.com/imputnet/helium).
+
+Argon installs to `%LOCALAPPDATA%\Argon` (or `Program Files\Argon` for all
+users) with its own registry keys, file associations and taskbar identity, so
+it can sit next to an installed Helium.
+
+Builds without Helium's signing secrets can't be packaged yet: `signing.py`
+needs the Azure Trusted Signing settings, so an unsigned build stops at the
+packaging step.
 
 ## Credits
 
-This repo is based on
+This repo is a fork of [helium-windows](https://github.com/imputnet/helium-windows),
+which is based on
 [ungoogled-chromium-windows](https://github.com/ungoogled-software/ungoogled-chromium-windows),
 but is pretty heavily modified for Helium. Huge shout-out to everyone behind ungoogled-chromium,
 they made working with Chromium infinitely easier.
 
-A huge thank you to [Depot](https://depot.dev/) for sponsoring our runners, which handle the Windows
-builds of Helium. Their high-performance infrastructure lets us compile and package Helium at least
-8 times faster than with GitHub-hosted runners, allowing us to release new builds within hours, not days.
-
 ## License
 All code, patches, modified portions of imported code or patches, and
-any other content that is unique to Helium and not imported from other
+any other content that is unique to Helium or Argon and not imported from other
 repositories is licensed under GPL-3.0. See [LICENSE](LICENSE).
 
 Any content imported from other projects retains its original license (for
@@ -62,8 +68,8 @@ methods for older Windows versions.
 Run in `Developer Command Prompt for VS` (as administrator):
 
 ```cmd
-git clone --recurse-submodules https://github.com/imputnet/helium-windows.git
-cd helium-windows
+git clone --recurse-submodules https://github.com/anyosag/argon-windows.git
+cd argon-windows
 # Replace TAG_OR_BRANCH_HERE with a tag or branch name
 git checkout --recurse-submodules TAG_OR_BRANCH_HERE
 python3 build.py
@@ -96,9 +102,9 @@ ln -s /usr/bin/vim /usr/bin/vi
 
 1. Start `Developer Command Prompt for VS` and `MSYS2 MSYS` shell and navigate to source folder
 	1. `Developer Command Prompt for VS`
-		* `cd c:\path\to\repo\helium-windows`
+		* `cd c:\path\to\repo\argon-windows`
 	1. `MSYS2 MSYS`
-		* `cd /path/to/repo/helium-windows`
+		* `cd /path/to/repo/argon-windows`
 		* You can use Git Bash to determine the path to this repo
 		* Or, you can find it yourself via `/<drive letter>/<path with forward slashes>`
 1. Clone sources

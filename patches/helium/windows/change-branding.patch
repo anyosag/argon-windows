@@ -4,17 +4,16 @@
  
  // The brand-specific company name to be included as a component of the install
  // and user data directory paths. May be empty if no such dir is to be used.
--inline constexpr wchar_t kCompanyPathName[] = L"";
-+inline constexpr wchar_t kCompanyPathName[] = L"imput";
+ inline constexpr wchar_t kCompanyPathName[] = L"";
  
  // The brand-specific product name to be included as a component of the install
  // and user data directory paths.
 -inline constexpr wchar_t kProductPathName[] = L"Chromium";
-+inline constexpr wchar_t kProductPathName[] = L"Helium";
++inline constexpr wchar_t kProductPathName[] = L"Argon";
  
  // The brand-specific safe browsing client name.
 -inline constexpr char kSafeBrowsingName[] = "chromium";
-+inline constexpr char kSafeBrowsingName[] = "helium";
++inline constexpr char kSafeBrowsingName[] = "argon";
  
  // Note: This list of indices must be kept in sync with the brand-specific
  // resource strings in chrome/installer/util/prebuild/create_string_rc.
@@ -26,26 +25,26 @@
 -        .base_app_name = L"Chromium",              // A distinct base_app_name.
 -        .base_app_id = L"Chromium",                // A distinct base_app_id.
 -        .browser_prog_id_prefix = L"ChromiumHTM",  // Browser ProgID prefix.
-+            L"{FB68A146-637A-48C2-A0C4-1565DE45FEBD}",
-+        .base_app_name = L"Helium",              // A distinct base_app_name.
-+        .base_app_id = L"Helium",                // A distinct base_app_id.
-+        .browser_prog_id_prefix = L"HeliumHTM",  // Browser ProgID prefix.
++            L"{260881EF-948D-42ED-B7AE-2979D7436606}",
++        .base_app_name = L"Argon",               // A distinct base_app_name.
++        .base_app_id = L"Argon",                 // A distinct base_app_id.
++        .browser_prog_id_prefix = L"ArgonHTM",   // Browser ProgID prefix.
          .browser_prog_id_description =
 -            L"Chromium HTML Document",  // Browser ProgID description.
 -        .direct_launch_url_scheme = "chromium",
 -        .pdf_prog_id_prefix = L"ChromiumPDF",  // PDF ProgID prefix.
-+            L"Helium HTML Document",  // Browser ProgID description.
-+        .direct_launch_url_scheme = "helium",
-+        .pdf_prog_id_prefix = L"HeliumPDF",  // PDF ProgID prefix.
++            L"Argon HTML Document",  // Browser ProgID description.
++        .direct_launch_url_scheme = "argon",
++        .pdf_prog_id_prefix = L"ArgonPDF",  // PDF ProgID prefix.
          .pdf_prog_id_description =
 -            L"Chromium PDF Document",  // PDF ProgID description.
-+            L"Helium PDF Document",  // PDF ProgID description.
++            L"Argon PDF Document",  // PDF ProgID description.
          .active_setup_guid =
 -            L"{7D2B3E1D-D096-4594-9D8F-A6667F12E0AC}",  // Active Setup
-+            L"{FB68A146-637A-48C2-A0C4-1565DE45FEBD}",  // Active Setup
++            L"{260881EF-948D-42ED-B7AE-2979D7436606}",  // Active Setup
                                                          // GUID.
 -        .toast_activator_clsid = {0x635EFA6F,
-+        .toast_activator_clsid = {0xE9852F6C,
++        .toast_activator_clsid = {0x65D50CE2,
                                    0x08D6,
                                    0x4EC9,
                                    {0xBD, 0x14, 0x8A, 0x0F, 0xDE, 0x97, 0x51,
@@ -85,7 +84,7 @@
  #else
    static const wchar_t kRegistryChromePolicyKey[] =
 -      L"SOFTWARE\\Policies\\Chromium";
-+      L"SOFTWARE\\Policies\\Helium";
++      L"SOFTWARE\\Policies\\Argon";
  #endif
    static const wchar_t kMetricsReportingEnabled[] = L"MetricsReportingEnabled";
  
@@ -96,7 +95,7 @@
  CHROME_POLICY_KEY = 'SOFTWARE\\\\Policies\\\\Google\\\\Chrome'
  CHROME_FOR_TESTING_POLICY_KEY = CHROME_POLICY_KEY + ' for Testing'
 -CHROMIUM_POLICY_KEY = 'SOFTWARE\\\\Policies\\\\Chromium'
-+CHROMIUM_POLICY_KEY = 'SOFTWARE\\\\Policies\\\\Helium'
++CHROMIUM_POLICY_KEY = 'SOFTWARE\\\\Policies\\\\Argon'
  PLATFORM_STRINGS = {
      'chrome_frame': ['win'],
      'chrome_os': ['chrome_os'],
@@ -127,7 +126,7 @@
        FILE_PATH_LITERAL("chrome_installer.log");
  #else  // BUILDFLAG(CHROMIUM_BRANDING)
 -      FILE_PATH_LITERAL("chromium_installer.log");
-+      FILE_PATH_LITERAL("helium_installer.log");
++      FILE_PATH_LITERAL("argon_installer.log");
  #endif
  
    // Fallback to current directory if getting the secure or temp directory
@@ -171,7 +170,7 @@
      config = {
          'build': 'chromium',
 -        'app_name': 'Chromium',
-+        'app_name': 'Helium',
++        'app_name': 'Argon',
          'doc_url': 'https://chromeenterprise.google/policies/',
          'frame_name': 'Chromium Frame',
          'os_name': 'ChromiumOS',
@@ -179,17 +178,17 @@
          'win_config': {
              'win': {
 -                'reg_mandatory_key_name': 'Software\\Policies\\Chromium',
-+                'reg_mandatory_key_name': 'Software\\Policies\\Helium',
++                'reg_mandatory_key_name': 'Software\\Policies\\Argon',
                  'reg_recommended_key_name':
 -                'Software\\Policies\\Chromium\\Recommended',
-+                'Software\\Policies\\Helium\\Recommended',
++                'Software\\Policies\\Argon\\Recommended',
                  'mandatory_category_path': ['chromium'],
                  'recommended_category_path': ['chromium_recommended'],
                  'category_path_strings': {
 -                    'chromium': 'Chromium',
 -                    'chromium_recommended': 'Chromium - {doc_recommended}',
-+                    'chromium': 'Helium',
-+                    'chromium_recommended': 'Helium - {doc_recommended}',
++                    'chromium': 'Argon',
++                    'chromium_recommended': 'Argon - {doc_recommended}',
                  },
                  'namespace': 'Chromium.Policies.Chromium',
              },
