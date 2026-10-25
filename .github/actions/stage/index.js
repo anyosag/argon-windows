@@ -42,7 +42,7 @@ async function run() {
 
     if (upload_final) {
         const finalDirectory = core.getInput('final_directory', {required: true});
-        const globber = await glob.create(path.join(finalDirectory, 'helium*'),
+        const globber = await glob.create(path.join(finalDirectory, 'argon*'),
             {matchDirectories: false});
         let packageList = await globber.glob();
         const finalArtifactName = arm ? 'helium-arm64' : 'helium-x86_64';

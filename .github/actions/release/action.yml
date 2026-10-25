@@ -28,9 +28,9 @@ runs:
         COMMIT_THEN=$(submodule_commit_at "$LAST_TAG")
         COMMIT_NOW=$(submodule_commit_at HEAD)
         {
-          printf 'Changes since last build:\n### helium-windows\n```\n'
+          printf 'Changes since last build:\n### argon-windows\n```\n'
           git log --oneline "$LAST_TAG..HEAD"
-          printf '```\n\n### helium-chromium\n```\n'
+          printf '```\n\n### Argon\n```\n'
           git -C helium-chromium log --oneline "$COMMIT_THEN..$COMMIT_NOW"
           printf '```\n\n---\n\n'
           printf 'See [this GitHub Actions Run](%s) for the [Workflow file](%s/workflow) used as well as the build logs and artifacts\n' "$GH_RUN_HREF" "$GH_RUN_HREF"
@@ -45,4 +45,4 @@ runs:
         name: ${{ inputs.version }}
         tag_name: ${{ inputs.version }}
         files: |
-          release-artifacts/helium*
+          release-artifacts/argon*

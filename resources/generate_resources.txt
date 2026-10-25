@@ -1,2 +1,3 @@
-../helium-chromium/resources/branding/app_icon/raw.png generated/app.ico
-../helium-chromium/resources/branding/app_icon/file.png generated/document.ico
+# Nothing to generate: assets/app.ico and assets/document.ico are prebuilt
+# so that each size can use the atom version drawn for it (see
+# helium-chromium/resources/generate_resources.txt).

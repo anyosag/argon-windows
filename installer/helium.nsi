@@ -2,15 +2,15 @@
 ; You can use, redistribute, and/or modify this source code under
 ; the terms of the GPL-3.0 license that can be found in the LICENSE file.
 ;
-; NSIS installer script for Helium browser.
+; NSIS installer script for Argon browser.
 ; Wraps setup.exe + helium.7z with a GUI.
 ;
 ; Required defines (passed via makensis -D):
-;   VERSION    - Helium version string (e.g., 0.10.4.1)
+;   VERSION    - Argon version string (e.g., 0.10.4.1)
 ;   ARCH       - Target architecture (x64 or arm64)
 ;   SETUP_EXE  - Path to setup.exe
 ;   HELIUM_7Z  - Path to helium.7z
-;   ICON_FILE  - Path to helium .ico file
+;   ICON_FILE  - Path to the Argon .ico file
 ;   OUTPUT_FILE - Output installer .exe path
 ;   LICENSE_FILE - Path to LICENSE file
 
@@ -22,10 +22,9 @@
 !include "FileFunc.nsh"
 
 ; --- Product Information ---
-!define PRODUCT_NAME "Helium"
-!define PRODUCT_PUBLISHER "imput"
-!define PRODUCT_COMPANY_PATH "imput"
-!define PRODUCT_GUID "{FB68A146-637A-48C2-A0C4-1565DE45FEBD}"
+!define PRODUCT_NAME "Argon"
+!define PRODUCT_PUBLISHER "The Argon Authors"
+!define PRODUCT_GUID "{260881EF-948D-42ED-B7AE-2979D7436606}"
 
 ; --- Installer Configuration ---
 Name "${PRODUCT_NAME} ${VERSION}"
@@ -81,7 +80,7 @@ VIAddVersionKey "ProductName" "${PRODUCT_NAME}"
 VIAddVersionKey "CompanyName" "${PRODUCT_PUBLISHER}"
 VIAddVersionKey "FileDescription" "${PRODUCT_NAME} Installer"
 VIAddVersionKey "FileVersion" "${VERSION}"
-VIAddVersionKey "LegalCopyright" "Copyright The Helium Authors"
+VIAddVersionKey "LegalCopyright" "Copyright The Argon Authors"
 
 ; =============================================================================
 ; Custom Install Type Page
@@ -167,7 +166,7 @@ Function .onInit
 
   ; Check for existing system-wide installation
   StrCpy $SystemInstallExists "0"
-  ${If} ${FileExists} "$PROGRAMFILES64\${PRODUCT_COMPANY_PATH}\${PRODUCT_NAME}\Application\chrome.exe"
+  ${If} ${FileExists} "$PROGRAMFILES64\${PRODUCT_NAME}\Application\chrome.exe"
     StrCpy $SystemInstallExists "1"
     StrCpy $InstallType "system"
   ${EndIf}
@@ -327,8 +326,8 @@ SectionEnd
 
 Function LaunchHelium
   ${If} $InstallType == "system"
-    Exec '"$PROGRAMFILES64\${PRODUCT_COMPANY_PATH}\${PRODUCT_NAME}\Application\chrome.exe"'
+    Exec '"$PROGRAMFILES64\${PRODUCT_NAME}\Application\chrome.exe"'
   ${Else}
-    Exec '"$LOCALAPPDATA\${PRODUCT_COMPANY_PATH}\${PRODUCT_NAME}\Application\chrome.exe"'
+    Exec '"$LOCALAPPDATA\${PRODUCT_NAME}\Application\chrome.exe"'
   ${EndIf}
 FunctionEnd

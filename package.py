@@ -82,10 +82,10 @@ def create_packages(build_outputs, output_dir, cpu_arch='64bit', *, installer_in
 
     target_cpu = get_target_cpu(installer_inputs)
 
-    installer_output = output_dir / f'helium_{version}_{target_cpu}-installer.exe'
+    installer_output = output_dir / f'argon_{version}_{target_cpu}-installer.exe'
     _build_nsis_installer(version, target_cpu, installer_inputs, installer_output)
 
-    mini_installer_output = output_dir / f'helium_{version}_{target_cpu}-mini-installer.exe'
+    mini_installer_output = output_dir / f'argon_{version}_{target_cpu}-mini-installer.exe'
     shutil.copy2(installer_inputs / 'mini_installer.exe', mini_installer_output)
 
     timestamp = None
@@ -95,7 +95,7 @@ def create_packages(build_outputs, output_dir, cpu_arch='64bit', *, installer_in
     except FileNotFoundError:
         pass
 
-    output = output_dir / f'helium_{version}_{target_cpu}-windows.zip'
+    output = output_dir / f'argon_{version}_{target_cpu}-windows.zip'
 
     filescfg.create_archive(
         portable_files(build_outputs, cpu_arch), tuple(), build_outputs, output, timestamp)
