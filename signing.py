@@ -2,7 +2,10 @@
 # Copyright 2026 The Helium Authors
 # You can use, redistribute, and/or modify this source code under
 # the terms of the GPL-3.0 license that can be found in the LICENSE file.
-"""Sign Windows release binaries and coordinate packaging."""
+"""Sign Windows release binaries and coordinate packaging.
+
+Without any AZURE_* signing settings, the packages are built unsigned.
+"""
 
 import argparse
 import json
@@ -15,6 +18,9 @@ import package
 
 ROOT = Path(__file__).resolve().parent
 SOURCE = ROOT / 'build/src'
+SIGNING_VARIABLES = ('AZURE_TENANT_ID', 'AZURE_CLIENT_ID', 'AZURE_CLIENT_SECRET',
+                     'AZURE_SIGNING_ENDPOINT', 'AZURE_SIGNING_ACCOUNT',
+                     'AZURE_SIGNING_CERTIFICATE_NAME')
 
 
 def run(*args, **kwargs):
@@ -84,7 +90,7 @@ def sign_staged_binaries(work, args, metadata):
 def parse_args():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--build-outputs', type=Path, default=SOURCE / 'out/Default')
-    parser.add_argument('--dlib', type=Path, required=True,
+    parser.add_argument('--dlib', type=Path,
                         help="Path to the x64 Azure.CodeSigning.Dlib.dll")
     parser.add_argument('--signtool', type=Path, help='Path to x64 signtool.exe')
     parser.add_argument('--arch', choices=('x64', 'arm64'))
@@ -93,16 +99,17 @@ def parse_args():
     args = parser.parse_args()
     args.build_outputs = args.build_outputs.resolve()
     args.seven_zip = args.seven_zip.resolve()
-    args.dlib = args.dlib.resolve()
-    if not args.dlib.is_file():
-        parser.error(f'Signing plugin not found: {args.dlib}')
-    args.signtool = args.signtool.resolve() if args.signtool else find_signtool()
-    required = ('AZURE_TENANT_ID', 'AZURE_CLIENT_ID', 'AZURE_CLIENT_SECRET',
-                'AZURE_SIGNING_ENDPOINT', 'AZURE_SIGNING_ACCOUNT',
-                'AZURE_SIGNING_CERTIFICATE_NAME')
-    missing = [name for name in required if not os.environ.get(name)]
+    missing = [name for name in SIGNING_VARIABLES if not os.environ.get(name)]
+    args.unsigned = len(missing) == len(SIGNING_VARIABLES)
+    if args.unsigned:
+        print('warn: no AZURE_* signing settings; packaging unsigned binaries')
+        return args
     if missing:
         parser.error('Missing environment variables: ' + ', '.join(missing))
+    if not args.dlib or not args.dlib.is_file():
+        parser.error(f'Signing plugin not found: {args.dlib}')
+    args.dlib = args.dlib.resolve()
+    args.signtool = args.signtool.resolve() if args.signtool else find_signtool()
 
     return args
 
@@ -128,8 +135,9 @@ def write_signing_metadata(work):
 def main():
     args = parse_args()
     work = package.stage_build(args.build_outputs, args.seven_zip, args.arch)
-    metadata = write_signing_metadata(work)
-    sign_staged_binaries(work, args, metadata)
+    metadata = None if args.unsigned else write_signing_metadata(work)
+    if metadata:
+        sign_staged_binaries(work, args, metadata)
 
     # Snapshot the signed inputs before packaging so verification can detect changes.
     expected = {'payload': package.inventory(work / 'payload'),
@@ -137,7 +145,8 @@ def main():
                 'setup': package.digest(work / 'setup.exe')}
     nsis, mini, portable = package.build_packages(work, args.build_outputs, args.seven_zip)
     package.verify_packages(work, args.seven_zip, nsis, mini, portable, expected)
-    sign([nsis, mini], 'Argon Installer', args, metadata)
+    if metadata:
+        sign([nsis, mini], 'Argon Installer', args, metadata)
     emit('artifacts', work / 'artifacts')
 
 
