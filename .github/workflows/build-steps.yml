@@ -11,17 +11,17 @@ on:
         type: string
     secrets:
       AZURE_TENANT_ID:
-        required: true
+        required: false
       AZURE_CLIENT_ID:
-        required: true
+        required: false
       AZURE_CLIENT_SECRET:
-        required: true
+        required: false
       AZURE_SIGNING_ENDPOINT:
-        required: true
+        required: false
       AZURE_SIGNING_ACCOUNT:
-        required: true
+        required: false
       AZURE_SIGNING_CERTIFICATE_NAME:
-        required: true
+        required: false
 
 permissions:
   contents: read

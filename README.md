@@ -7,9 +7,18 @@ Argon installs to `%LOCALAPPDATA%\Argon` (or `Program Files\Argon` for all
 users) with its own registry keys, file associations and taskbar identity, so
 it can sit next to an installed Helium.
 
-Builds without Helium's signing secrets can't be packaged yet: `signing.py`
-needs the Azure Trusted Signing settings, so an unsigned build stops at the
-packaging step.
+To build a release on GitHub, run the "Build and release binaries" workflow
+from the Actions tab. Each finished run has installers and a portable ZIP
+for x86_64 and arm64 among its artifacts, and ticking "Create a release" also
+publishes them as a release.
+
+Without the `AZURE_*` Trusted Signing secrets, `signing.py` packages Argon
+unsigned:
+
+- Windows SmartScreen warns before the installer runs: click More info →
+  Run anyway.
+- There's no built-in updater, which needs a WinSparkle signing key: install
+  each new version by hand.
 
 ## Credits
 
